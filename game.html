@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop API Example</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f4f8; 
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .list {
+            width: 450px;
+            height: 500px;
+            border: 2px solid #4a90e2; 
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            position: relative;
+            background-color: #ffffff; 
+        }
+
+        h2 {
+            text-align: center;
+            color: #4a90e2; 
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .draggable {
+            width: 100px;
+            margin: 5px;
+            cursor: move;
+            transition: transform 0.2s, box-shadow 0.2s; 
+            border-radius: 5px; 
+        }
+
+        .draggable:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+        }
+
+        .dropzone {
+            border: 2px dashed #aaa;
+            height: 100%; 
+            position: absolute; 
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            display: none;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .list:hover .dropzone {
+            display: block; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="list" id="list1">
+            <h2>BROKEN PUZZLE</h2>
+            <img id="item1" class="draggable" src="1.jpg" alt="1" draggable="true" ondragstart="drag(event)">
+            <img id="item2" class="draggable" src="2.jpg" alt="2" draggable="true" ondragstart="drag(event)">
+            <img id="item3" class="draggable" src="3.jpg" alt="3" draggable="true" ondragstart="drag(event)">
+            <img id="item4" class="draggable" src="4.jpg" alt="4" draggable="true" ondragstart="drag(event)">
+            <img id="item5" class="draggable" src="5.jpg" alt="5" draggable="true" ondragstart="drag(event)">
+            <img id="item6" class="draggable" src="6.jpg" alt="6" draggable="true" ondragstart="drag(event)">
+            <img id="item7" class="draggable" src="7.jpg" alt="7" draggable="true" ondragstart="drag(event)">
+            <img id="item8" class="draggable" src="8.jpg" alt="8" draggable="true" ondragstart="drag(event)">
+            <img id="item9" class="draggable" src="9.jpg" alt="9" draggable="true" ondragstart="drag(event)">
+            <img id="item10" class="draggable" src="10.jpg" alt="10" draggable="true" ondragstart="drag(event)">
+            <img id="item11" class="draggable" src="11.jpg" alt="11" draggable="true" ondragstart="drag(event)">
+            <img id="item12" class="draggable" src="12.jpg" alt="12" draggable="true" ondragstart="drag(event)">
+ </div>
+        <div class="list" id="list2" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>SOLVE THE BROKEN PUZZLE HERE</h2>
+            <div class="dropzone"></div>
+        </div>
+    </div>
+    <script>
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+        function drop(event) {
+            event.preventDefault();
+            const data = event.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            const dropzone = event.target.closest('.list');
+            if (dropzone) {
+                dropzone.appendChild(draggedElement); 
+            }
+        }
+    </script>
+</body>
+</html>
